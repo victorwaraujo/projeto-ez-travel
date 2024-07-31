@@ -17,7 +17,7 @@ import { errorHandler } from "./error-handler";
 import { env } from "./env";
 import { loginUser, registerUser } from "./routes/user";
 
-
+const port = process.env.PORT || 3333
 const app = fastify()
 
 app.register(cors, {
