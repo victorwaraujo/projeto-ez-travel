@@ -17,7 +17,7 @@ import { errorHandler } from "./error-handler";
 import { env } from "./env";
 import { loginUser, registerUser } from "./routes/user";
 
-const port = process.env.PORT || 3333
+
 const app = fastify()
 
 app.register(cors, {
@@ -44,6 +44,6 @@ app.register(getParticipant)
 app.register(loginUser)
 app.register(registerUser)
 
-app.listen({ port: env.PORT }).then(()=>{
+app.listen({ host: '0.0.0.0', port: env.PORT }).then(()=>{
     console.log('Server Running!')
 })
