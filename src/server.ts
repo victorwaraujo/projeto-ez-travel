@@ -44,6 +44,10 @@ app.register(getParticipant)
 app.register(loginUser)
 app.register(registerUser)
 
+app.get('/', async (request, reply) => {
+    reply.send({ message: 'Bem-vindo ao backend do Projeto EZ Travel!' });
+});
+
 app.listen({ host: '0.0.0.0', port: env.PORT }).then(()=>{
     console.log('Server Running!')
 })
