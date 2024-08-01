@@ -1,5 +1,7 @@
 import fastify from "fastify";   
 import cors from '@fastify/cors'       
+import path from 'path'
+import FastifyStatic from '@fastify/static'
 import { createTrip } from "./routes/create-trip";
 import { validatorCompiler, serializerCompiler } from "fastify-type-provider-zod";
 import { confirmTrip } from "./routes/confirm-trip";
@@ -16,6 +18,7 @@ import { getParticipant } from "./routes/get-participant";
 import { errorHandler } from "./error-handler";
 import { env } from "./env";
 import { loginUser, registerUser } from "./routes/user";
+import { fileURLToPath } from "url";
 
 
 const app = fastify()
@@ -44,8 +47,15 @@ app.register(getParticipant)
 app.register(loginUser)
 app.register(registerUser)
 
-app.get(`/${env.WEB_BASE_URL}`, async (request, reply) => {
-    reply.send({ message: 'Bem-vindo ao backend do Projeto EZ Travel!' })
+const __dirname = path.resolve(); // Usar __dirname diretamente
+
+app.register(FastifyStatic, {
+  root: path.join(__dirname, 'dist'),
+  prefix: '/', // Serve o conteúdo da pasta 'dist' no root
+})
+
+app.get(`/*`, async (request, reply) => {
+    reply.sendFile('index.html')
 })
 
 app.listen({ host: '0.0.0.0', port: env.PORT }).then(()=>{
