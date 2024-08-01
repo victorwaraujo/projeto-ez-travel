@@ -48,7 +48,7 @@ export async function registerUser(app: FastifyInstance) {
 }
 
 export async function loginUser(app: FastifyInstance) {
-    app.withTypeProvider<ZodTypeProvider>().post('/', {
+    app.withTypeProvider<ZodTypeProvider>().post('/login', {
         schema: {
             body: z.object({
                 email: z.string().email(),
