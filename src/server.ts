@@ -44,7 +44,7 @@ app.register(getParticipant)
 app.register(loginUser)
 app.register(registerUser)
 
-app.get(`${env.WEB_BASE_URL}`, async (request, reply) => {
+app.get(`/${env.WEB_BASE_URL}`, async (request, reply) => {
     reply.send({ message: 'Bem-vindo ao backend do Projeto EZ Travel!' })
 })
 
