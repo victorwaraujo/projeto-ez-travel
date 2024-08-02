@@ -37,10 +37,18 @@ export async function getActivities(app: FastifyInstance) {
         const activities = Array.from({ length: differenceInDaysBetweenTripStartAndEnd +1 }).map((_, index) => {
             const date = dayjs(trip.starts_at).add(index, 'days')
 
+            console.log('Checking activities for date:', date.format()) // Adicione este log para verificar as datas
+
             return {
                 date: date.toDate(),
                 activities: trip.activities.filter(activity => {
-                    return dayjs(activity.occurs_at).isSame(date, 'day')
+                    const isSameDay = dayjs(activity.occurs_at).isSame(date, 'day')
+                    if (isSameDay) {
+                        console.log('Activity found for date:', date.format()) // Adicione este log para ver quais atividades estão sendo correspondidas
+                    }
+                    return isSameDay
+                    // return dayjs(activity.occurs_at).isSame(date, 'day')
+                    
                 })
             }
         })
