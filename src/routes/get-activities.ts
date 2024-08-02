@@ -42,12 +42,7 @@ export async function getActivities(app: FastifyInstance) {
             return {
                 date: date.toDate(),
                 activities: trip.activities.filter(activity => {
-                    const isSameDay = dayjs(activity.occurs_at).isSame(date, 'day')
-                    if (isSameDay) {
-                        console.log('Activity found for date:', date.format()) // Adicione este log para ver quais atividades estão sendo correspondidas
-                    }
-                    return isSameDay
-                    // return dayjs(activity.occurs_at).isSame(date, 'day')
+                    return dayjs(activity.occurs_at).isSame(date, 'day')
                     
                 })
             }
