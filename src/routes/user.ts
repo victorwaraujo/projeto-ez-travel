@@ -6,15 +6,17 @@ import { prisma } from "../lib/prisma";
 import { ClientError } from "../errors/client-error";
 import { env } from "../env";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { userLoginSchema, userSchema } from "../schemas/user-schema";
 
 export async function registerUser(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().post('/register', {
         schema: {
-            body: z.object({
-                name: z.string().min(1),
-                email: z.string().email(),
-                password: z.string().min(6)
-            })
+            body:userSchema
+            // body: z.object({
+            //     name: z.string().min(1),
+            //     email: z.string().email(),
+            //     password: z.string().min(6)
+            // })
         }
     }, async (request, reply) => {
         const { name, email, password } = request.body;
@@ -50,10 +52,11 @@ export async function registerUser(app: FastifyInstance) {
 export async function loginUser(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().post('/login', {
         schema: {
-            body: z.object({
-                email: z.string().email(),
-                password: z.string().min(6)
-            })
+            body: userLoginSchema
+            // body: z.object({
+            //     email: z.string().email(),
+            //     password: z.string().min(6)
+            // })
         }
     }, async (request, reply) => {
         const { email, password } = request.body;
